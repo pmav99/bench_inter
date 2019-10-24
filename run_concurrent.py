@@ -24,7 +24,8 @@ def main():
 
     results = [f.result() for f in as_completed(future_processes)]
     for result in results:
-        assert len(result) > 800
+        pass
+
 
 if __name__ == "__main__":
     main()

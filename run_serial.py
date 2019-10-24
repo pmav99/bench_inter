@@ -29,6 +29,7 @@ def create_tile_from_row(row):
         png = create_tile(x, y, z, proc_id)
     with open("/tmp/%s.png" % index, "wb") as fd:
         fd.write(png)
+    assert len(png) > 400, len(png)
     return png
 
 
@@ -43,7 +44,6 @@ def main():
     for index in indexes:
         row = df.iloc[index]
         result = create_tile_from_row(row)
-    assert len(result) > 800
 
 
 if __name__ == "__main__":

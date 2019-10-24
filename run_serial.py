@@ -22,6 +22,16 @@ def create_tile(x, y, z, proc_id):
     return buff2
 
 
+def create_tile_from_row(row):
+    msg = "index={index:5d}, x={x:5d}; y={y:5d}; z={z:2d}; procid={proc_id}"
+    index, x, y, z, proc_id = row.name, row.x, row.y, row.z, row.proc_id
+    with timer.Timer(msg.format(index=index, x=x, y=y, z=z, proc_id=proc_id)):
+        png = create_tile(x, y, z, proc_id)
+    with open("/tmp/%s.png" % index, "wb") as fd:
+        fd.write(png)
+    return png
+
+
 def main():
     if len(sys.argv) <= 1:
         sys.exit("Usage: python run_single_py INDEX [INDEX [INDEX [...]]]]")
@@ -32,11 +42,8 @@ def main():
     indexes = [int(index) for index in sys.argv[1:]]
     for index in indexes:
         row = df.iloc[index]
-        x, y, z, proc_id = row.x, row.y, row.z, row.proc_id
-        with timer.Timer(msg.format(x=x, y=y, z=z, proc_id=proc_id)):
-            png = create_tile(x, y, z, proc_id)
-        with open("/tmp/%d.png" % index, "wb") as fd:
-            fd.write(png)
+        result = create_tile_from_row(row)
+    assert len(result) > 800
 
 
 if __name__ == "__main__":

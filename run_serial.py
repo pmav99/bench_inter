@@ -29,7 +29,10 @@ def create_tile_from_row(row):
         png = create_tile(x, y, z, proc_id)
     with open("/tmp/%s.png" % index, "wb") as fd:
         fd.write(png)
-    assert len(png) > 400, len(png)
+    if len(png) == 334:
+        print("WARNING: Empty png!!!")
+    elif len(png) <= 334:
+        raise ValueError("WTF?")
     return png
 
 

@@ -24,7 +24,8 @@ RUN set -xeu; \
     pip install --no-cache -r /tmp/requirements.txt; \
     mkdir -p $BENCHMARK_DIR;
 
+COPY entrypoint.sh /tmp/entrypoint.sh
+ENTRYPOINT ["/tmp/entrypoint.sh"]
 WORKDIR $BENCHMARK_DIR
-ENTRYPOINT ["python"]
 
 COPY run_concurrent.py run_serial.py timer.py query_params.csv $BENCHMARK_DIR
